@@ -23,8 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('store/', include('store.urls')),
     path('auth/', include('djoser.urls')),
-    # path('authjwt/', include('djoser.urls.jwt')),
-    # path('api-auth/', include('rest_framework.urls'))
+    path('authjwt/', include('djoser.urls.jwt')),
+    path('api-auth/', include('rest_framework.urls'))
 ]
-urlpatterns += staticfiles_urlpatterns(),
+
+urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
