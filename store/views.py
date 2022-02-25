@@ -1,5 +1,7 @@
+from sqlite3 import Timestamp
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from django import views
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
@@ -83,4 +85,12 @@ class UserViewSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
 
-    
+class Report(views.View):
+    def get(self, request):
+        report_type = request.GET.get("report_type")
+        from_ = request.GET.get("from")
+        to =  request.GET.get("to")
+        
+        r = Remittance.objects.filter(timestamp__range= [from_, to]).values
+        
+        return Response(r)

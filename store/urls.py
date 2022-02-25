@@ -13,4 +13,4 @@ router.register('truck', views.TruckViewSet)
 router.register('remittance', views.RemittanceViewSet)
 router.register('orders', views.OrderViewSet)
 
-urlpatterns = router.urls 
+urlpatterns = [path("report/", views.Report.as_view())] + router.urls 
