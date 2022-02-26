@@ -1,0 +1,8 @@
+django-filter
+Pillow
+djoser
+django-templated-mail
+djangorestframework
+Django==3.2
+drf-nested-routers
+PyJWT==v1.7.1

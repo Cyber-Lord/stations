@@ -1,0 +1,4 @@
+/env
+*.pyc
+bitsms.pem
+db.sqlite3
