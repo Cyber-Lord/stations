@@ -1,6 +1,7 @@
 from statistics import mode
 import string
 from django.db import models
+from django.forms import IntegerField
 from .validators import ASCIIUsernameValidator
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator
@@ -86,14 +87,14 @@ class Remittance(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, max_length=15, default=PENDING)
     rejection_note = models.CharField(max_length=500, blank=True)
     truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
-    amount = models.DecimalField(
+    price_per_litre = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(1)])
     teller = models.ImageField(upload_to='tellers', blank=True, null=True)
     remittance_id = models.CharField(max_length=10, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    price_per_litre = models.FloatField()
+    no_of_litre = models.IntegerField()
     
     def save(self, *args, **kwargs):
         last_remittance = Remittance.objects.last()
