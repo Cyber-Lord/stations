@@ -89,6 +89,6 @@ class Remittance(models.Model):
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(1)])
-    teller = models.ImageField(upload_to='tellers')
+    teller = models.ImageField(upload_to='tellers', blank=True, null=True)
     remittance_id = models.CharField(max_length=10, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
