@@ -32,7 +32,7 @@ class RemittanceSerializer(serializers.ModelSerializer):
     station = StationSerializer()
     class Meta:
         model = Remittance
-        fields = ['id', 'station', "no_of_litre", 'status', 'rejection_note', 'truck', 'price_per_litre', 'teller', 'remittance_id', 'timestamp',]
+        fields = ['id', 'station', "no_of_litres", 'status', 'rejection_note', 'truck', 'price_per_litre', 'teller', 'remittance_id', 'timestamp',]
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

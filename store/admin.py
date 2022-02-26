@@ -48,4 +48,4 @@ class StationAdmin(admin.ModelAdmin):
 
 @admin.register(models.Remittance)
 class RemittanceAdmin(admin.ModelAdmin):
-    list_display = ['station', 'status', 'no_of_litre', 'price_per_litre']
+    list_display = ['station', 'status', 'no_of_litres', 'price_per_litre']

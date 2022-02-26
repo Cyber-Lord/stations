@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='remittance',
-            name='no_of_litre',
+            name='no_of_litres',
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
