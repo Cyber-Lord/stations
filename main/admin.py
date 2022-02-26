@@ -5,6 +5,8 @@ from django.utils.html import format_html, urlencode
 from django.urls import reverse
 from . import models
 
+admin.site.site_title = "AASalisu Admin"
+admin.site.site_header = "AASalisu Management Console"
 
 @admin.register(models.Item)
 class ItemAdmin(admin.ModelAdmin):
