@@ -1,3 +1,4 @@
+from statistics import mode
 import string
 from django.db import models
 from .validators import ASCIIUsernameValidator
@@ -92,6 +93,7 @@ class Remittance(models.Model):
     teller = models.ImageField(upload_to='tellers', blank=True, null=True)
     remittance_id = models.CharField(max_length=10, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    price_per_litre = models.FloatField()
     
     def save(self, *args, **kwargs):
         last_remittance = Remittance.objects.last()
