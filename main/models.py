@@ -31,11 +31,12 @@ class Category(models.Model):
 class User(AbstractUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    other_name = models.CharField(max_length=100, blank=True)
     phone = models.CharField(max_length=15, blank=True)
     is_sales_person = models.BooleanField(default=False)
     is_store_keeper = models.BooleanField(default=False)
     is_station_manager = models.BooleanField(default=False)
+    other_name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length=254, blank=True, null=True)
 
     username_validator = ASCIIUsernameValidator()
 
@@ -81,23 +82,42 @@ class Station(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     station_manager = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return self.name
 
-class Remittance(models.Model):
+
+class FuelSupply(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE)
+    truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
+    no_of_litres = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    price_per_litre = models.FloatField()
+    
+    def __str__(self) -> str:
+        return self.station.name
+    
+    class Meta:
+        verbose_name = "Supply"
+        verbose_name_plural = "Supplies"
+    
+class Remittance(models.Model):
+    supply = models.ForeignKey(FuelSupply, on_delete=models.CASCADE)
+    amount = models.DecimalField(
+            max_digits=10,
+            decimal_places=2,
+            validators=[MinValueValidator(1)])
     status = models.CharField(choices=STATUS_CHOICES, max_length=15, default=PENDING)
     rejection_note = models.CharField(max_length=500, blank=True)
-    truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
-    price_per_litre = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        validators=[MinValueValidator(1)])
-    teller = models.ImageField(upload_to='tellers', blank=True, null=True)
+    teller = models.ImageField(upload_to='media/tellers', blank=True, null=True)
     remittance_id = models.CharField(max_length=10, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    no_of_litres = models.IntegerField()
+    
+    def __str__(self) -> str:
+        return f'Remittance - {self.remittance_id}'
     
     def save(self, *args, **kwargs):
         last_remittance = Remittance.objects.last()
         if not self.remittance_id:
-            self.remittance_id = "#{0:05}".format((last_remittance.id or 0) + 1)
+            self.remittance_id = "#{0:05}".format((last_remittance.id if last_remittance else 0) + 1)
         super(Remittance, self).save(*args, **kwargs)

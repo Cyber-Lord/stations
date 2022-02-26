@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8+fygwq63o#6_j=1i4w&lfjbxrfskma00i4=u8ej4#-2i_qs2i
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-AUTH_USER_MODEL = 'store.User'
+AUTH_USER_MODEL = 'main.User'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'aasalisu.pythonanywhere.com']
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_nested',
     'rest_framework',
     'djoser',
-    'store',
+    'main',
 ]
 
 MIDDLEWARE = [

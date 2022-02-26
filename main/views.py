@@ -6,18 +6,20 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.decorators import action, permission_classes
 from rest_framework import status
 
-from .models import Category, Item, Order, Remittance, Station, Truck, User
-from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, TruckSerializer, UserSerializer, CategorySerializer
+from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User
+from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, SupplySerializer, TruckSerializer, UserSerializer, CategorySerializer
+
+supported_http_method_names = ['get', 'post', 'patch', 'delete', 'put']
 
 # Create your views here.
 class CategoryViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
+    http_method_names = supported_http_method_names
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
 
 class ItemViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
+    http_method_names = supported_http_method_names
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated]
@@ -33,31 +35,36 @@ class ItemViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class StationViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
+    http_method_names = supported_http_method_names
     queryset = Station.objects.all()
     serializer_class = StationSerializer
     permission_classes = [IsAuthenticated]
 
 class TruckViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
     queryset = Truck.objects.all()
     serializer_class = TruckSerializer
     permission_classes = [IsAuthenticated]
 
 class RemittanceViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
+    http_method_names = supported_http_method_names
     queryset = Remittance.objects.all()
     serializer_class = RemittanceSerializer
     permission_classes = [IsAuthenticated]
 
 class OrderViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
+    http_method_names = supported_http_method_names
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
+class SupplyViewSet(ModelViewSet):
+    http_method_names = supported_http_method_names
+    queryset = FuelSupply.objects.all()
+    serializer_class = SupplySerializer
+    permission_classes = [IsAuthenticated]
+
 class UserViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete', 'put']
+    http_method_names = supported_http_method_names
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdminUser]
