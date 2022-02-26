@@ -94,6 +94,7 @@ class Remittance(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     
     def save(self, *args, **kwargs):
-        last_remittance = Remittance.objects.last() or 0
-        self.remittance_id = "#{0:05}".format(last_remittance + 1)
+        last_remittance = Remittance.objects.last()
+        if not self.remittance_id:
+            self.remittance_id = "#{0:05}".format((last_remittance.id or 0) + 1)
         super(Remittance, self).save(*args, **kwargs)
