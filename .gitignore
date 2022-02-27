@@ -1,4 +1,11 @@
 /env
+/venv
+/lib
+/lib64
+/include
+/bin
+/share
+*.cfg
 *.pyc
 bitsms.pem
 db.sqlite3
