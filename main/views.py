@@ -1,10 +1,15 @@
+from ast import Store
+from django import views
 from django.shortcuts import render
+from django.core.serializers import serialize
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.decorators import action, permission_classes
 from rest_framework import status
+from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
 
 from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User
 from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, SupplySerializer, TruckSerializer, UserSerializer, CategorySerializer
@@ -90,4 +95,20 @@ class UserViewSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
 
+class RangeViewSet(views.View):
+    def get(self, request):
+        reportType = request.GET.get("report_type")
+        from_ = request.GET.get("from")
+        to = request.GET.get("to")
+        qs = Remittance.objects.none()
+
+        if reportType == 'store':
+            qs = Order.objects.filter(order_date__range=[from_, to])
+            #serializer = OrderSerializer(qs, many=True)
     
+        if reportType == 'station':
+            qs = Remittance.objects.filter(timestamp__range=[from_, to])
+            serializer = RemittanceSerializer(qs, many=True)
+
+        return JsonResponse(serializer.data, safe=False)
+        
