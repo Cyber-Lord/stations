@@ -101,10 +101,12 @@ class RangeViewSet(views.View):
         from_ = request.GET.get("from")
         to = request.GET.get("to")
         qs = Remittance.objects.none()
+        if not all([reportType, from_, to]):
+            return JsonResponse({"Error": "please pass the required params"})
 
         if reportType == 'store':
             qs = Order.objects.filter(order_date__range=[from_, to])
-            #serializer = OrderSerializer(qs, many=True)
+            serializer = OrderSerializer(qs, many=True)
     
         if reportType == 'station':
             qs = Remittance.objects.filter(timestamp__range=[from_, to])
