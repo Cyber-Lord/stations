@@ -79,6 +79,7 @@ class Store(models.Model):
 
 class Order(models.Model):
     store = models.ForeignKey(Store, null=True, blank=True, on_delete=models.CASCADE)
+    truck = models.ForeignKey(Truck, null=True, blank=True, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
     quantity = models.PositiveIntegerField()

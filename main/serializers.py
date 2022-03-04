@@ -50,6 +50,7 @@ class StoreSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     store = StoreSerializer(read_only=True)
+    truck = TruckSerializer(read_only=True)
     item = ItemSerializer(read_only=True)
     
     class Meta:
