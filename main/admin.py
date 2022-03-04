@@ -47,7 +47,7 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_editable = ['order_status']
-    list_display = [ 'truck', 'order_status', 'item', 'order_date']
+    list_display = [ 'store__name', 'order_status', 'item', 'order_date']
 
 @admin.register(models.Station)
 class StationAdmin(admin.ModelAdmin):
