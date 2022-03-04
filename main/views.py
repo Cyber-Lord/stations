@@ -61,7 +61,7 @@ class RemittanceViewSet(ModelViewSet):
         if self.request.user.is_superuser:
             return self.queryset
 
-        query_set = queryset.filter(supply__station__station_manager=self.request.user).order_by("-timestamp")
+        query_set = queryset.filter(supply__station__station_manager_id=self.request.user.id).order_by("-timestamp")
         return query_set
 
 class OrderViewSet(ModelViewSet):
