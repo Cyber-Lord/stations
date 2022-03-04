@@ -1,4 +1,3 @@
-from ast import Store
 from django import views
 from django.shortcuts import render
 from django.core.serializers import serialize
@@ -12,7 +11,7 @@ from rest_framework import status
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 
-from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User
+from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User, Store
 from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, SupplySerializer, TruckSerializer, UserSerializer, CategorySerializer
 
 supported_http_method_names = ['get', 'post', 'patch', 'delete', 'put']
