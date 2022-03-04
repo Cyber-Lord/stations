@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import FuelSupply, User, Category, Item, Station, Order, Remittance, Truck
+from .models import FuelSupply, User, Category, Item, Station, Order, Remittance, Truck, Store
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,8 +43,13 @@ class RemittanceSerializer(serializers.ModelSerializer):
         model = Remittance
         fields = '__all__'
 
+class StoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Store
+        fields = '__all__'
+
 class OrderSerializer(serializers.ModelSerializer):
-    truck = TruckSerializer(read_only=True)
+    store = StoreSerializer(read_only=True)
     item = ItemSerializer(read_only=True)
     
     class Meta:

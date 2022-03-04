@@ -16,6 +16,11 @@ class ItemAdmin(admin.ModelAdmin):
     list_select_related = ['category']
     search_fields = ['name']
 
+@admin.register(models.Store)
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name', 'item']
+    list_filter = ['item']
+    search_fields = ['name']
 
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):

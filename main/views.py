@@ -2,6 +2,7 @@ from ast import Store
 from django import views
 from django.shortcuts import render
 from django.core.serializers import serialize
+from main.serializers import StoreSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -60,6 +61,12 @@ class OrderViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+class StoreViewSet(ModelViewSet):
+    http_method_names = supported_http_method_names
+    queryset = Store.objects.all()
+    serializer_class = StoreSerializer
     permission_classes = [IsAuthenticated]
 
 class SupplyViewSet(ModelViewSet):

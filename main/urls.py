@@ -13,6 +13,7 @@ router.register('truck', views.TruckViewSet)
 router.register('remittance', views.RemittanceViewSet)
 router.register('orders', views.OrderViewSet)
 router.register('supply', views.SupplyViewSet)
+router.register('store', views.StoreViewSet)
 
 urlpatterns = router.urls + [
     path('range', views.RangeViewSet.as_view(), name="range")

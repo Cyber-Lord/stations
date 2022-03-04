@@ -70,8 +70,15 @@ class Truck(models.Model):
     def __str__(self) -> str:
         return self.driver + " " + self.number
 
+class Store(models.Model):
+    name = models.CharField(max_length=15)
+    manager = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.name
+
 class Order(models.Model):
-    truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
     quantity = models.PositiveIntegerField()
