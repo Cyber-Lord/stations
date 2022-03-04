@@ -114,3 +114,13 @@ class RangeViewSet(views.View):
 
         return JsonResponse(serializer.data, safe=False)
         
+
+class RemittanceStatus(views.View):
+    def post(self, request):
+        status = request.POST.get("status")
+        remittance_id = request.POST.get("remittance_id")
+
+        remittance = Remittance.objects.get(id=remittance_id)
+        remittance.status = status
+        remittance.save()
+        return JsonResponse({"message": "Successfully Updated"})
