@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-8+fygwq63o#6_j=1i4w&lfjbxrfskma00i4=u8ej4#-2i_qs2i
 DEBUG = True
 AUTH_USER_MODEL = 'main.User'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'cyerlord.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 
 
 # Application definition
