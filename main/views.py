@@ -82,6 +82,14 @@ class SupplyViewSet(ModelViewSet):
     serializer_class = SupplySerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.request.user.is_superuser:
+            return self.queryset
+
+        query_set = FuelSupply.objects.filter(station__station_manager_id=self.request.user.id).order_by("-timestamp")
+        return query_set
+
 class UserViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
     queryset = User.objects.all()
