@@ -46,8 +46,11 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
+    def store(self, obj):
+        return obj.store.name
+        
     list_editable = ['order_status']
-    list_display = [ 'store__name', 'order_status', 'item', 'order_date']
+    list_display = [ 'store', 'order_status', 'item', 'order_date']
 
 @admin.register(models.Station)
 class StationAdmin(admin.ModelAdmin):
