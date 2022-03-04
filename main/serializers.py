@@ -38,10 +38,12 @@ class SupplySerializer(serializers.ModelSerializer):
     def get_summary(self, obj):
         remitted_amount = obj.remittance_set.filter(status="A").aggregate(Sum('amount'))['amount__sum']
         due_amount = obj.remittance_set.exclude(status="A").aggregate(Sum('amount'))['amount__sum']
+        total =  obj.supply.price_per_litre * obj.supply.no_of_litres
 
         return {
             "remitted_amount": remitted_amount,
-            "due_amount": due_amount
+            "due_amount": due_amount,
+            "total": total
         }
     
     class Meta:
