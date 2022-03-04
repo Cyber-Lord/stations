@@ -77,6 +77,10 @@ class Order(models.Model):
     order_status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=PENDING)
     
+    class Meta:
+        verbose_name = "Store Request"
+        verbose_name_plural = "Store Requests"
+    
 
 class Station(models.Model):
     name = models.CharField(max_length=255)
