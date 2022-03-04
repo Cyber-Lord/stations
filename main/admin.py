@@ -18,8 +18,8 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(models.Store)
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ['name', 'item']
-    list_filter = ['item']
+    list_display = ['name']
+    list_filter = ['name']
     search_fields = ['name']
 
 @admin.register(models.Category)
