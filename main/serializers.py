@@ -37,8 +37,8 @@ class SupplySerializer(serializers.ModelSerializer):
 
     def get_summary(self, obj):
         remitted_amount = obj.remittance_set.filter(status="A").aggregate(Sum('amount'))['amount__sum']
-        due_amount = obj.remittance_set.exclude(status="A").aggregate(Sum('amount'))['amount__sum']
         total =  obj.price_per_litre * obj.no_of_litres
+        due_amount = total - remitted_amount
 
         return {
             "remitted_amount": remitted_amount,
