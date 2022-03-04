@@ -15,6 +15,5 @@ router.register('orders', views.OrderViewSet)
 router.register('supply', views.SupplyViewSet)
 
 urlpatterns = router.urls + [
-    path('range', views.RangeViewSet.as_view(), name="range"),
-    path('status', views.RemittanceStatus.as_view(), name="status"),
+    path('range', views.RangeViewSet.as_view(), name="range")
 ]
