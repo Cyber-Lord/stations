@@ -52,9 +52,17 @@ class TruckViewSet(ModelViewSet):
 
 class RemittanceViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Remittance.objects.all()
+    queryset = Remittance.objects.filter(status="P").order_by("-timestamp")
     serializer_class = RemittanceSerializer
     permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.request.user.is_superuser:
+            return self.queryset
+
+        query_set = queryset.filter(supply__station__station_manager__user_id=self.request.user.id).order_by("-timestamp")
+        return query_set
 
 class OrderViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
