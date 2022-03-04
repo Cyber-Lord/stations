@@ -13,7 +13,7 @@ PENDING = 'P'
 REJECTED = 'R'
 
 STATUS_CHOICES = [
-    (APPROVED, 'Accepted'),
+    (APPROVED, 'Approved'),
     (PENDING, 'Pending'),
     (REJECTED, 'Rejected'),
 ]
@@ -70,12 +70,24 @@ class Truck(models.Model):
     def __str__(self) -> str:
         return self.driver + " " + self.number
 
+class Store(models.Model):
+    name = models.CharField(max_length=15)
+    manager = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.name
+
 class Order(models.Model):
-    truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, null=True, blank=True, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
+    quantity = models.PositiveIntegerField()
     order_status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=PENDING)
+    
+    class Meta:
+        verbose_name = "Store Request"
+        verbose_name_plural = "Store Requests"
     
 
 class Station(models.Model):

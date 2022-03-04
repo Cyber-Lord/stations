@@ -1,7 +1,7 @@
-from ast import Store
 from django import views
 from django.shortcuts import render
 from django.core.serializers import serialize
+from main.serializers import StoreSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -11,7 +11,7 @@ from rest_framework import status
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 
-from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User
+from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User, Store
 from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, SupplySerializer, TruckSerializer, UserSerializer, CategorySerializer
 
 supported_http_method_names = ['get', 'post', 'patch', 'delete', 'put']
@@ -60,6 +60,12 @@ class OrderViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+class StoreViewSet(ModelViewSet):
+    http_method_names = supported_http_method_names
+    queryset = Store.objects.all()
+    serializer_class = StoreSerializer
     permission_classes = [IsAuthenticated]
 
 class SupplyViewSet(ModelViewSet):
@@ -113,4 +119,3 @@ class RangeViewSet(views.View):
             serializer = RemittanceSerializer(qs, many=True)
 
         return JsonResponse(serializer.data, safe=False)
-        
