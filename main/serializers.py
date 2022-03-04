@@ -17,7 +17,7 @@ class TruckSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ItemSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
+    category = CategorySerializer(read_only=True)
     class Meta:
         model = Item
         fields = '__all_'
@@ -28,14 +28,14 @@ class StationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SupplySerializer(serializers.ModelSerializer):
-    truck = TruckSerializer()
-    station = StationSerializer()
+    truck = TruckSerializer(read_only=True)
+    station = StationSerializer(read_only=True)
     class Meta:
         model = FuelSupply
         fields = '__all__'
         
 class RemittanceSerializer(serializers.ModelSerializer):
-    supply = SupplySerializer()
+    supply = SupplySerializer(read_only=True)
     class Meta:
         model = Remittance
         fields = '__all__'
