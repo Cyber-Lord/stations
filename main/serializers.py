@@ -30,6 +30,9 @@ class StationSerializer(serializers.ModelSerializer):
 class SupplySerializer(serializers.ModelSerializer):
     truck = TruckSerializer(read_only=True)
     station = StationSerializer(read_only=True)
+    station_id = serializers.PrimaryKeyRelatedField(source="station", queryset=Station.objects.all(), write_only=True)
+    truck_id = serializers.PrimaryKeyRelatedField(source="truck", queryset=Truck.objects.all(), write_only=True)
+    
     class Meta:
         model = FuelSupply
         fields = '__all__'
