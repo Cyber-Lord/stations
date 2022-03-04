@@ -44,6 +44,8 @@ class RemittanceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
+    truck = TruckSerializer(read_only=True)
+    item = ItemSerializer(read_only=True)
     class Meta:
         model = Order
         fields = '__all__'
