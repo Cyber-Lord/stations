@@ -78,7 +78,7 @@ class Store(models.Model):
         return self.name
 
 class Order(models.Model):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, null=True, blank=True, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
     quantity = models.PositiveIntegerField()
