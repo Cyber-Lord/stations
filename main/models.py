@@ -74,6 +74,7 @@ class Order(models.Model):
     truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
+    quantity = models.PositiveIntegerField()
     order_status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=PENDING)
     
