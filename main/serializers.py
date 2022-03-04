@@ -20,7 +20,7 @@ class ItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     class Meta:
         model = Item
-        fields = '__all_'
+        fields = '__all__'
 
 class StationSerializer(serializers.ModelSerializer):
     class Meta:
