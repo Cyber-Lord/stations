@@ -13,7 +13,7 @@ PENDING = 'P'
 REJECTED = 'R'
 
 STATUS_CHOICES = [
-    (APPROVED, 'Accepted'),
+    (APPROVED, 'Approved'),
     (PENDING, 'Pending'),
     (REJECTED, 'Rejected'),
 ]
