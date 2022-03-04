@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework_nested',
     'rest_framework',
-    'django.contrib.staticfiles',
     'drf_yasg',
     'djoser',
     'main',
