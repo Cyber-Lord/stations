@@ -66,7 +66,7 @@ class RemittanceViewSet(ModelViewSet):
 
 class OrderViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Order.objects.filter(order_status="Pending").order_by('-order_date')
+    queryset = Order.objects.filter(order_status="P").order_by('-order_date')
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     
