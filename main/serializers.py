@@ -53,7 +53,6 @@ class SupplySerializer(serializers.ModelSerializer):
 class RemittanceSerializer(serializers.ModelSerializer):
     supply = SupplySerializer(read_only=True)
     supply_id = serializers.PrimaryKeyRelatedField(source="supply", queryset=FuelSupply.objects.all(), write_only=True)
-    truck_id = serializers.PrimaryKeyRelatedField(source="truck", queryset=Truck.objects.all(), write_only=True)
     
     class Meta:
         model = Remittance
