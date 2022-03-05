@@ -53,7 +53,7 @@ class TruckViewSet(ModelViewSet):
 
 class RemittanceViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Remittance.objects.exclude(Q(status=APPROVED) | Q(status=REJECTED)).order_by("-timestamp")
+    queryset = Remittance.objects.exclude(Q(status=APPROVED) | Q(status=REJECTED))
     serializer_class = RemittanceSerializer
     permission_classes = [IsAuthenticated]
     
