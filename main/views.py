@@ -61,8 +61,8 @@ class RemittanceViewSet(ModelViewSet):
         if self.request.user.is_superuser:
             return self.queryset
 
-        # query_set = Remittance.objects.filter(supply__station__station_manager_id=self.request.user.id).order_by("-timestamp")
-        # return query_set
+        query_set = Remittance.objects.filter(supply__station__station_manager_id=self.request.user.id).order_by("-timestamp")
+        return query_set
 
 class OrderViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
