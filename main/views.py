@@ -52,14 +52,13 @@ class TruckViewSet(ModelViewSet):
 
 class RemittanceViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Remittance.objects.filter(status=PENDING).order_by("-timestamp")
     serializer_class = RemittanceSerializer
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         queryset = self.queryset
         if self.request.user.is_superuser:
-            return self.queryset
+            return Remittance.objects.filter(status=PENDING).order_by("-timestamp")
 
         query_set = Remittance.objects.filter(supply__station__station_manager_id=self.request.user.id).order_by("-timestamp")
         return query_set
