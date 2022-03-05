@@ -5,13 +5,14 @@ from main.serializers import StoreSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.decorators import action, permission_classes
 from rest_framework import status
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 
-from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User, Store, PENDING
+from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User, Store, PENDING, APPROVED, REJECTED
 from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, SupplySerializer, TruckSerializer, UserSerializer, CategorySerializer
 
 supported_http_method_names = ['get', 'post', 'patch', 'delete', 'put']
@@ -52,7 +53,7 @@ class TruckViewSet(ModelViewSet):
 
 class RemittanceViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Remittance.objects.filter(status=PENDING).order_by("-timestamp")
+    queryset = Remittance.objects.exclude(Q(status=APPROVED) | Q(status=REJECTED)).order_by("-timestamp")
     serializer_class = RemittanceSerializer
     permission_classes = [IsAuthenticated]
     
