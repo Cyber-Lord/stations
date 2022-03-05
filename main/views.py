@@ -11,7 +11,7 @@ from rest_framework import status
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 
-from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User, Store
+from .models import Category, FuelSupply, Item, Order, Remittance, Station, Truck, User, Store, PENDING
 from .serializers import ItemSerializer, OrderSerializer, RemittanceSerializer, StationSerializer, SupplySerializer, TruckSerializer, UserSerializer, CategorySerializer
 
 supported_http_method_names = ['get', 'post', 'patch', 'delete', 'put']
@@ -52,7 +52,7 @@ class TruckViewSet(ModelViewSet):
 
 class RemittanceViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Remittance.objects.filter(status="P").distinct().order_by("-timestamp")
+    queryset = Remittance.objects.filter(status=PENDING).order_by("-timestamp")
     serializer_class = RemittanceSerializer
     permission_classes = [IsAuthenticated]
     
@@ -61,12 +61,12 @@ class RemittanceViewSet(ModelViewSet):
         if self.request.user.is_superuser:
             return self.queryset
 
-        query_set = Remittance.objects.filter(supply__station__station_manager_id=self.request.user.id).order_by("-timestamp")
-        return query_set
+        # query_set = Remittance.objects.filter(supply__station__station_manager_id=self.request.user.id).order_by("-timestamp")
+        # return query_set
 
 class OrderViewSet(ModelViewSet):
     http_method_names = supported_http_method_names
-    queryset = Order.objects.filter(order_status="P").order_by('-order_date')
+    queryset = Order.objects.filter(order_status=PENDING).order_by('-order_date')
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     
