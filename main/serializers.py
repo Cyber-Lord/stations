@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db.models import Sum
 from .models import FuelSupply, User, Category, Item, Station, Order, Remittance, Truck, Store
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,6 +33,18 @@ class SupplySerializer(serializers.ModelSerializer):
     station = StationSerializer(read_only=True)
     station_id = serializers.PrimaryKeyRelatedField(source="station", queryset=Station.objects.all(), write_only=True)
     truck_id = serializers.PrimaryKeyRelatedField(source="truck", queryset=Truck.objects.all(), write_only=True)
+    summary = serializers.SerializerMethodField()
+
+    def get_summary(self, obj):
+        remitted_amount = obj.remittance_set.filter(status="A").aggregate(Sum('amount'))['amount__sum']
+        total =  obj.price_per_litre * obj.no_of_litres
+        due_amount = float(total or 0) - float(remitted_amount or 0)
+
+        return {
+            "remitted_amount": remitted_amount,
+            "due_amount": due_amount,
+            "total": total
+        }
     
     class Meta:
         model = FuelSupply
@@ -39,6 +52,8 @@ class SupplySerializer(serializers.ModelSerializer):
         
 class RemittanceSerializer(serializers.ModelSerializer):
     supply = SupplySerializer(read_only=True)
+    supply_id = serializers.PrimaryKeyRelatedField(source="supply", queryset=FuelSupply.objects.all(), write_only=True)
+    
     class Meta:
         model = Remittance
         fields = '__all__'
@@ -50,6 +65,7 @@ class StoreSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     store = StoreSerializer(read_only=True)
+    truck = TruckSerializer(read_only=True)
     item = ItemSerializer(read_only=True)
     
     class Meta:

@@ -1,8 +1,8 @@
 branch-defaults:
   master:
-    environment: aasalisu2-dev
+    environment: Aas-env
 global:
-  application_name: aasalisu2
+  application_name: aas
   branch: null
   default_ec2_keyname: aws-eb
   default_platform: Python 3.8 running on 64bit Amazon Linux 2
